@@ -21,5 +21,10 @@ use App\Http\Controllers\BusServiceController;
 //     return $request->user();
 // });
 
-Route::get('/bus-stops', [BusServiceController::class, 'list_bus_stop']);
-Route::get('/bus-stops/{bus_stop_id}',  [BusServiceController::class, 'view_bus_stop']);
+Route::middleware('auth.apikey')->group(function () {
+    Route::get('/bus-stops', [BusServiceController::class, 'list_bus_stop']);
+    Route::get('/bus-stops/{bus_stop_id}', [BusServiceController::class, 'view_bus_stop']);
+});
+
+// Route::get('/bus-stops', [BusServiceController::class, 'list_bus_stop']);
+// Route::get('/bus-stops/{bus_stop_id}',  [BusServiceController::class, 'view_bus_stop']);
