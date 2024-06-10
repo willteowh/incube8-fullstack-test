@@ -18,7 +18,8 @@ class BusStopFactory extends Factory
     {
         return [
             'bus_stop_name' => $this->faker->streetName,
-            'bus_stop_location_value' => $this->faker->latitude,
+            'bus_stop_location_latitude' => $this->faker->randomFloat(4, 1.3200, 1.3800),
+            'bus_stop_location_longitude' => $this->faker->randomFloat(4, 102.5000, 103.8000),
         ];
     }
 }

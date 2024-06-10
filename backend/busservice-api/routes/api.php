@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BusController;
 use App\Http\Controllers\BusServiceController;
 
 
@@ -22,9 +23,6 @@ use App\Http\Controllers\BusServiceController;
 // });
 
 Route::middleware('auth.apikey')->group(function () {
-    Route::get('/bus-stops', [BusServiceController::class, 'list_bus_stop']);
-    Route::get('/bus-stops/{bus_stop_id}', [BusServiceController::class, 'view_bus_stop']);
+    Route::get('/bus-stops', [BusServiceController::class, 'findNearestBusStop']);
+    Route::get('/bus-stops/{bus_stop_id}', [BusServiceController::class, 'viewBusTiming']);
 });
-
-// Route::get('/bus-stops', [BusServiceController::class, 'list_bus_stop']);
-// Route::get('/bus-stops/{bus_stop_id}',  [BusServiceController::class, 'view_bus_stop']);

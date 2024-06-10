@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Bus;
 use App\Models\BusStop;
+use App\Models\BusSchedule;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -30,28 +31,34 @@ class DatabaseSeeder extends Seeder
             // Generate a random schedule
             $schedule = [];
 
-            foreach ($busStops as $busStop) {
-                foreach ($daysOfWeek as $day) {
-                    $schedule[] = [
-                        'bus_id' => $bus->bus_id,
-                        'bus_stop_id' => $busStop->bus_stop_id,
-                        'bus_schedule_day' => $day,
-                        'bus_schedule_time' => $this->randomTime(),
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
+            foreach ($daysOfWeek as $day) {
+                $startTime = strtotime("05:".rand(10,59).":00"); // Start time (5am something)
+                $endTime = strtotime('23:59:59'); // End time (11:59:59 PM)
+
+                // Generate schedule for the day
+                $currentTime = $startTime;
+                while ($currentTime <= $endTime) {
+                    // Randomize arrival time within a 2-hour interval
+                    $randomTime = date('H:i:s', $currentTime + rand(0, 1) * 7200); // 7200 seconds = 2 hours
+
+                    foreach ($busStops as $busStop) {
+                        $schedule[] = [
+                            'bus_id' => $bus->bus_id,
+                            'bus_stop_id' => $busStop->bus_stop_id,
+                            'bus_schedule_day' => $day,
+                            'bus_schedule_time' => $randomTime,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+
+                    // Move to the next interval (2 hours)
+                    $currentTime += 7200; // 7200 seconds = 2 hours
                 }
             }
 
             // Insert the schedule into the database
             DB::table('bus_schedules')->insert($schedule);
         }
-    }
-
-    private function randomTime()
-    {
-        $hour = rand(6, 23);
-        $minute = rand(0, 59);
-        return sprintf('%02d:%02d:00', $hour, $minute);
     }
 }
