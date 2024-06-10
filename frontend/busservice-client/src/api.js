@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: `http://127.0.0.1:8000/api/`,
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    'x-api-key' : 'abcsssss'
+    'x-api-key' : process.env.REACT_APP_API_KEY
   }
 });

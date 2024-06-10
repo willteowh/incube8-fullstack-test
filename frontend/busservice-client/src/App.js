@@ -8,6 +8,7 @@ import { BusStopList, BusStopDetail } from "./components/";
 
 function App() {
   const [busStops, setBusStops] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedBusStop, setSelectedBusStop] = useState(null);
   const [busStopDetails, setBusStopDetails] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
@@ -21,8 +22,9 @@ function App() {
         params: { lat, lon },
       });
       setBusStops(response.data.slice(0, 3)); // Get closest 3 bus stops
+      setErrorMessage(''); // Clear error message
     } catch (error) {
-      console.error("Error fetching bus stops:", error);
+      setErrorMessage(`Error fetching bus stops: ${error.message}`);
     }
   };
 
@@ -51,8 +53,10 @@ function App() {
         ...busStopData,
         schedule: filteredSchedule,
       });
+      
+      setErrorMessage(''); // Clear error message
     } catch (error) {
-      console.error("Error fetching bus timing:", error);
+      setErrorMessage(`Error fetching bus schedule: ${error.message}`);
     } finally {
       setLoadingDetails(false);
     }
@@ -73,6 +77,7 @@ function App() {
         Incube8 - Simple Bus Service App by Will.T
       </h1>
       <Button label="Find Nearest Bus Stops" onClick={fetchNearestBusStops} />
+      { errorMessage !== "" && <p>{errorMessage}</p>}
       <BusStopList busStops={busStops} onBusStopClick={handleBusStopClick} />
       {selectedBusStop && (
         <BusStopDetail

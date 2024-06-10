@@ -43,12 +43,12 @@ const BusStopDetail = ({ busStop, onClose, loading }) => (
           {busStop.schedule.length > 0 ? (
             <>
               <p>
-                Next Bus: {busStop.schedule[0].bus_name}, coming in{" "}
-                {getRelativeTime(busStop.schedule[0].bus_schedule_time)}
+                Next Bus: <b>{busStop.schedule[0].bus_name}</b>, coming in{" "}
+                <b>{getRelativeTime(busStop.schedule[0].bus_schedule_time)}</b>
               </p>
               <p>
-                Following Bus: {busStop.schedule[1].bus_name}, coming in{" "}
-                {getRelativeTime(busStop.schedule[1].bus_schedule_time)}
+                Following Bus: <b>{busStop.schedule[1].bus_name}</b>, coming in{" "}
+                <b>{getRelativeTime(busStop.schedule[1].bus_schedule_time)}</b>
               </p>
             </>
           ) : (
