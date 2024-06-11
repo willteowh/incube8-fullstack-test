@@ -1,5 +1,4 @@
 import "tailwindcss/tailwind.css";
-import "./App.css";
 import API from "./api";
 import dayjs from "dayjs";
 import { useState } from "react";
