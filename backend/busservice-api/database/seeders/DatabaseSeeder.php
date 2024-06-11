@@ -32,14 +32,14 @@ class DatabaseSeeder extends Seeder
             $schedule = [];
 
             foreach ($daysOfWeek as $day) {
-                $startTime = strtotime("05:".rand(10,59).":00"); // Start time (5am something)
+                $startTime = strtotime("05:".str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT).":00"); // Start time (5am something)
                 $endTime = strtotime('23:59:59'); // End time (11:59:59 PM)
 
                 // Generate schedule for the day
                 $currentTime = $startTime;
                 while ($currentTime <= $endTime) {
                     // Randomize arrival time within a 2-hour interval
-                    $randomTime = date('H:i:s', $currentTime + rand(0, 1) * 7200); // 7200 seconds = 2 hours
+                    $randomTime = date('H:i:s', $currentTime + rand(10, 100) * 7200 / 10); // 7200 seconds = 2 hours
 
                     foreach ($busStops as $busStop) {
                         $schedule[] = [
